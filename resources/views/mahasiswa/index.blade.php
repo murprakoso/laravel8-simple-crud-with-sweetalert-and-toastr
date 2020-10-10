@@ -53,7 +53,7 @@
                 </ul>
             </nav> --}}
         </div>
-    </div>
+    </div><br>
     {{ $mahasiswa->links() }}
 
 </div>
