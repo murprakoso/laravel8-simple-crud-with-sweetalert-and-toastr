@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MahasiswaRequest;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -43,12 +44,17 @@ class MahasiswaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MahasiswaRequest $request)
     {
         try {
-            Mahasiswa::create($request->all());
-            Alert::success('Success', 'Successfull created');
+            $params = $request->except('_token');
+
+            if (Mahasiswa::create($params)) {
+                // Alert::success('Success', 'Successfull created');
+                toastr()->info('Successfull created');
+            }
             return redirect('/mahasiswa');
+            //
         } catch (\Exception $e) {
             Alert::error('Oops', $e->getMessage());
             return redirect('/mahasiswa');
@@ -99,20 +105,19 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MahasiswaRequest $request, $id)
     {
         try {
-            $mahasiswa = Mahasiswa::findOrFail($id);
-            $mahasiswa->nim = $request->nim;
-            $mahasiswa->nama = $request->nama;
-            $mahasiswa->email = $request->email;
-            $mahasiswa->jurusan = $request->jurusan;
-            $mahasiswa->update();
+            $params = $request->except('_token');
 
-            Alert::success('Success', 'Successfull updated');
+            $mahasiswa = Mahasiswa::findOrFail($id);
+            if ($mahasiswa->update($params)) {
+                // Alert::success('success', 'Mahasiswa has been updated');
+                toastr()->info('Mahasiswa has been updated');
+            }
             return redirect('/mahasiswa');
         } catch (\Throwable $e) {
-            Alert::error('Oops', $e->getMessage());
+            toastr()->info('Oops, ' . $e->getMessage());
             return redirect('/mahasiswa');
         }
     }
@@ -126,8 +131,11 @@ class MahasiswaController extends Controller
     public function destroy($id)
     {
         try {
-            Mahasiswa::destroy($id);
-            Alert::success('Success', 'Successfull deleted');
+            if (Mahasiswa::destroy($id)) {
+                // Alert::success('Success', 'Successfull deleted');
+                toastr()->info('Successfull deleted');
+            }
+
             return redirect('/mahasiswa');
         } catch (\Exception $e) {
             Alert::error('Oops', $e->getMessage());

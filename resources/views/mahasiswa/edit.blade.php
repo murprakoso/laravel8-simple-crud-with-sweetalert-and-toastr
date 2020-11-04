@@ -14,24 +14,41 @@
 
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input type="text" class="form-control" name="nama" id="nama" value="{{$mahasiswa->nama}}">
+                        <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama"
+                            id="nama" value="{{ !empty(old('nama')) ? old('nama') : $mahasiswa->nama  }}">
+                        @error('nama')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="nim">NIM</label>
-                        <input type="text" class="form-control" name="nim" id="nim" value="{{$mahasiswa->nim}}">
+                        <input type="text" class="form-control @error('nim') is-invalid @enderror" name="nim" id="nim"
+                            value="{{ !empty(old('nim')) ? old('nim') : $mahasiswa->nim  }}">
+                        @error('nim')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="email">Email address</label>
-                        <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp"
-                            value="{{$mahasiswa->email}}">
-                        {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                            else.</small> --}}
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
+                            id="email" aria-describedby="emailHelp"
+                            value="{{ !empty(old('email')) ? old('email') : $mahasiswa->email  }}">
+                        @error('email')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="jurusan">Jurusan</label>
-                        <input type="text" class="form-control" name="jurusan" id="jurusan"
-                            value="{{$mahasiswa->jurusan}}">
+                        <input type="text" class="form-control @error('jurusan') is-invalid @enderror" name="jurusan"
+                            id="jurusan" value="{{ !empty(old('jurusan')) ? old('jurusan') : $mahasiswa->jurusan  }}">
+                        @error('jurusan')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
+
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
 
