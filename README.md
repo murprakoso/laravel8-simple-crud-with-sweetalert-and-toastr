@@ -10,6 +10,8 @@ Clone this repository into your computer
 
 `php artisan key:generate`
 
+`php artisan migrate`
+
 run :
 
 `php artisan serve`
